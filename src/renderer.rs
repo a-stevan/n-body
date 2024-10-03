@@ -1,13 +1,13 @@
 use std::sync::atomic::{AtomicBool, AtomicI32, Ordering};
 
 use quarkstrom::egui::{self, mutex::Mutex};
-use quarkstrom::{winit_input_helper::WinitInputHelper, winit::event::VirtualKeyCode};
+use quarkstrom::{winit::event::VirtualKeyCode, winit_input_helper::WinitInputHelper};
 
 use once_cell::sync::Lazy;
 use ultraviolet::Vec2;
 
-use crate::START_SEED;
 use crate::body::Body;
+use crate::START_SEED;
 
 pub static PAUSED: Lazy<AtomicBool> = Lazy::new(|| false.into());
 pub static TICK: Lazy<AtomicI32> = Lazy::new(|| 0.into());
@@ -78,7 +78,11 @@ impl quarkstrom::Renderer for Renderer {
 
             for i in 0..bodies.len() {
                 let p = bodies[i].pos;
-                ctx.draw_circle(Vec2::new(p.x as f32, p.y as f32), 0.05, 0xffffff);
+                ctx.draw_circle(
+                    Vec2::new(p.x as f32, p.y as f32),
+                    0.05,
+                    [0xff, 0xff, 0xff, 0xff],
+                );
             }
         };
     }
